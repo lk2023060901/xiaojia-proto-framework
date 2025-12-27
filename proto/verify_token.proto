@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+package framework;
+
+option go_package = "github.com/lk2023060901/xiaojia-proto-framework;framework";
+
+import "proto/err_code.proto";
+
+// VerifyTokenReq Gateway 向 Login 验证 Token 请求
+//
+// 使用场景：
+//   1. 客户端连接 Gateway 后，携带 Token 进行认证
+//   2. Gateway 收到 Token 后，向 Login 服务验证有效性
+//
+message VerifyTokenReq {
+  // 客户端提供的 Token
+  string token = 1;
+
+  // 客户端 IP（用于安全校验，可选）
+  string client_ip = 2;
+
+  // 设备 ID（用于多端登录控制，可选）
+  string device_id = 3;
+}
+
+// VerifyTokenRsp Login 返回的验证结果
+message VerifyTokenRsp {
+  // 错误码
+  ErrCode code = 1;
+
+  // 错误信息（当 code != ERR_SUCCESS 时）
+  string message = 2;
+
+  // 用户 ID（验证成功时返回）
+  uint64 user_id = 3;
+
+  // 用户唯一标识（验证成功时返回）
+  string user_uuid = 4;
+
+  // Token 剩余有效时间（秒）
+  int64 ttl = 5;
+
+  // 用户附加信息
+  UserInfo user_info = 6;
+}
+
+// UserInfo 用户基础信息
+message UserInfo {
+  // 昵称
+  string nickname = 1;
+
+  // 头像 URL
+  string avatar = 2;
+
+  // 账号等级/VIP 等级
+  int32 level = 3;
+
+  // 扩展字段（JSON 格式，业务自定义）
+  string extra = 10;
+}
