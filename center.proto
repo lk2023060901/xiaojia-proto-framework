@@ -1,0 +1,93 @@
+syntax = "proto3";
+
+package framework;
+
+option go_package = "github.com/lk2023060901/xiaojia-proto-framework;framework";
+
+// CenterService center 服务
+// game 通过双向流连接 center，上报玩家状态
+service CenterService {
+  // Stream 双向流通信
+  rpc Stream(stream CenterRequest) returns (stream CenterResponse);
+}
+
+// CenterRequest 请求消息
+message CenterRequest {
+  oneof request {
+    PlayerOnline player_online = 1;       // 玩家上线
+    PlayerOffline player_offline = 2;     // 玩家下线
+    PlayerQuery player_query = 3;         // 查询玩家位置
+    Heartbeat heartbeat = 4;              // 心跳
+  }
+}
+
+// CenterResponse 响应消息
+message CenterResponse {
+  oneof response {
+    PlayerOnlineResult online_result = 1;     // 上线结果
+    PlayerOfflineResult offline_result = 2;   // 下线结果
+    PlayerQueryResult query_result = 3;       // 查询结果
+    HeartbeatResult heartbeat_result = 4;     // 心跳结果
+    KickPlayer kick_player = 5;               // 踢人指令
+    BroadcastMessage broadcast = 6;           // 广播消息
+  }
+}
+
+// PlayerOnline 玩家上线
+message PlayerOnline {
+  string player_id = 1;     // 玩家 ID
+  string game_id = 2;       // game 服务器 ID
+  int64 login_time = 3;     // 登录时间
+}
+
+// PlayerOffline 玩家下线
+message PlayerOffline {
+  string player_id = 1;     // 玩家 ID
+  string game_id = 2;       // game 服务器 ID
+  int64 logout_time = 3;    // 登出时间
+}
+
+// PlayerQuery 查询玩家位置
+message PlayerQuery {
+  string player_id = 1;     // 玩家 ID
+}
+
+// Heartbeat 心跳
+message Heartbeat {
+  string game_id = 1;       // game 服务器 ID
+}
+
+// PlayerOnlineResult 上线结果
+message PlayerOnlineResult {
+  bool success = 1;
+  string message = 2;
+}
+
+// PlayerOfflineResult 下线结果
+message PlayerOfflineResult {
+  bool success = 1;
+  string message = 2;
+}
+
+// PlayerQueryResult 查询结果
+message PlayerQueryResult {
+  bool online = 1;          // 是否在线
+  string game_id = 2;       // 所在 game 服务器 ID
+}
+
+// HeartbeatResult 心跳结果
+message HeartbeatResult {
+  int64 server_time = 1;    // 服务器时间
+}
+
+// KickPlayer 踢人指令（center -> game）
+message KickPlayer {
+  string player_id = 1;     // 玩家 ID
+  string reason = 2;        // 原因
+}
+
+// BroadcastMessage 广播消息（center -> game）
+message BroadcastMessage {
+  repeated string player_ids = 1;  // 目标玩家（空表示全服）
+  bytes payload = 2;               // 消息内容
+}
