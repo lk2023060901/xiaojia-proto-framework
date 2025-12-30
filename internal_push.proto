@@ -19,7 +19,7 @@ service InternalPushService {
 
 // PushToUserReq 单播请求
 message PushToUserReq {
-  uint64 uid = 1;            // 目标用户UID
+  string uuid = 1;           // 目标用户UUID
   uint32 op_code = 2;        // 业务协议号
   bytes payload = 3;         // 业务序列化消息体
 }
@@ -31,7 +31,7 @@ message PushToUserRes {
 
 // MulticastToRoomReq 组播请求
 message MulticastToRoomReq {
-  string anchor_open_id = 1; // 直播间主播ID
+  string anchor_uuid = 1;    // 直播间主播UUID
   uint32 op_code = 2;        // 业务协议号
   bytes payload = 3;         // 业务序列化消息体
 }
