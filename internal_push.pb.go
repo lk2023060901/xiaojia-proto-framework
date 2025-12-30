@@ -24,7 +24,7 @@ const (
 // PushToUserReq 单播请求
 type PushToUserReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Uid           uint64                 `protobuf:"varint,1,opt,name=uid,proto3" json:"uid,omitempty"`                     // 目标用户UID
+	Uuid          string                 `protobuf:"bytes,1,opt,name=uuid,proto3" json:"uuid,omitempty"`                    // 目标用户UUID
 	OpCode        uint32                 `protobuf:"varint,2,opt,name=op_code,json=opCode,proto3" json:"op_code,omitempty"` // 业务协议号
 	Payload       []byte                 `protobuf:"bytes,3,opt,name=payload,proto3" json:"payload,omitempty"`              // 业务序列化消息体
 	unknownFields protoimpl.UnknownFields
@@ -61,11 +61,11 @@ func (*PushToUserReq) Descriptor() ([]byte, []int) {
 	return file_internal_push_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *PushToUserReq) GetUid() uint64 {
+func (x *PushToUserReq) GetUuid() string {
 	if x != nil {
-		return x.Uid
+		return x.Uuid
 	}
-	return 0
+	return ""
 }
 
 func (x *PushToUserReq) GetOpCode() uint32 {
@@ -130,9 +130,9 @@ func (x *PushToUserRes) GetCode() ErrCode {
 // MulticastToRoomReq 组播请求
 type MulticastToRoomReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	AnchorOpenId  string                 `protobuf:"bytes,1,opt,name=anchor_open_id,json=anchorOpenId,proto3" json:"anchor_open_id,omitempty"` // 直播间主播ID
-	OpCode        uint32                 `protobuf:"varint,2,opt,name=op_code,json=opCode,proto3" json:"op_code,omitempty"`                    // 业务协议号
-	Payload       []byte                 `protobuf:"bytes,3,opt,name=payload,proto3" json:"payload,omitempty"`                                 // 业务序列化消息体
+	AnchorUuid    string                 `protobuf:"bytes,1,opt,name=anchor_uuid,json=anchorUuid,proto3" json:"anchor_uuid,omitempty"` // 直播间主播UUID
+	OpCode        uint32                 `protobuf:"varint,2,opt,name=op_code,json=opCode,proto3" json:"op_code,omitempty"`            // 业务协议号
+	Payload       []byte                 `protobuf:"bytes,3,opt,name=payload,proto3" json:"payload,omitempty"`                         // 业务序列化消息体
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -167,9 +167,9 @@ func (*MulticastToRoomReq) Descriptor() ([]byte, []int) {
 	return file_internal_push_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *MulticastToRoomReq) GetAnchorOpenId() string {
+func (x *MulticastToRoomReq) GetAnchorUuid() string {
 	if x != nil {
-		return x.AnchorOpenId
+		return x.AnchorUuid
 	}
 	return ""
 }
@@ -237,15 +237,16 @@ var File_internal_push_proto protoreflect.FileDescriptor
 
 const file_internal_push_proto_rawDesc = "" +
 	"\n" +
-	"\x13internal_push.proto\x12\tframework\x1a\x0eerr_code.proto\"T\n" +
-	"\rPushToUserReq\x12\x10\n" +
-	"\x03uid\x18\x01 \x01(\x04R\x03uid\x12\x17\n" +
+	"\x13internal_push.proto\x12\tframework\x1a\x0eerr_code.proto\"V\n" +
+	"\rPushToUserReq\x12\x12\n" +
+	"\x04uuid\x18\x01 \x01(\tR\x04uuid\x12\x17\n" +
 	"\aop_code\x18\x02 \x01(\rR\x06opCode\x12\x18\n" +
 	"\apayload\x18\x03 \x01(\fR\apayload\"7\n" +
 	"\rPushToUserRes\x12&\n" +
-	"\x04code\x18\x01 \x01(\x0e2\x12.framework.ErrCodeR\x04code\"m\n" +
-	"\x12MulticastToRoomReq\x12$\n" +
-	"\x0eanchor_open_id\x18\x01 \x01(\tR\fanchorOpenId\x12\x17\n" +
+	"\x04code\x18\x01 \x01(\x0e2\x12.framework.ErrCodeR\x04code\"h\n" +
+	"\x12MulticastToRoomReq\x12\x1f\n" +
+	"\vanchor_uuid\x18\x01 \x01(\tR\n" +
+	"anchorUuid\x12\x17\n" +
 	"\aop_code\x18\x02 \x01(\rR\x06opCode\x12\x18\n" +
 	"\apayload\x18\x03 \x01(\fR\apayload\"<\n" +
 	"\x12MulticastToRoomRes\x12&\n" +

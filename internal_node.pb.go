@@ -24,10 +24,10 @@ const (
 // SyncUserActionReq 同步玩家操作请求
 type SyncUserActionReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Uid           uint64                 `protobuf:"varint,1,opt,name=uid,proto3" json:"uid,omitempty"`                                        // 玩家UID
-	AnchorOpenId  string                 `protobuf:"bytes,2,opt,name=anchor_open_id,json=anchorOpenId,proto3" json:"anchor_open_id,omitempty"` // 目标主播ID
-	ActionType    uint32                 `protobuf:"varint,3,opt,name=action_type,json=actionType,proto3" json:"action_type,omitempty"`        // 动作类型
-	ActionData    []byte                 `protobuf:"bytes,4,opt,name=action_data,json=actionData,proto3" json:"action_data,omitempty"`         // 业务序列化数据
+	Uuid          string                 `protobuf:"bytes,1,opt,name=uuid,proto3" json:"uuid,omitempty"`                                // 玩家UUID
+	AnchorUuid    string                 `protobuf:"bytes,2,opt,name=anchor_uuid,json=anchorUuid,proto3" json:"anchor_uuid,omitempty"`  // 目标主播UUID
+	ActionType    uint32                 `protobuf:"varint,3,opt,name=action_type,json=actionType,proto3" json:"action_type,omitempty"` // 动作类型
+	ActionData    []byte                 `protobuf:"bytes,4,opt,name=action_data,json=actionData,proto3" json:"action_data,omitempty"`  // 业务序列化数据
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -62,16 +62,16 @@ func (*SyncUserActionReq) Descriptor() ([]byte, []int) {
 	return file_internal_node_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *SyncUserActionReq) GetUid() uint64 {
+func (x *SyncUserActionReq) GetUuid() string {
 	if x != nil {
-		return x.Uid
+		return x.Uuid
 	}
-	return 0
+	return ""
 }
 
-func (x *SyncUserActionReq) GetAnchorOpenId() string {
+func (x *SyncUserActionReq) GetAnchorUuid() string {
 	if x != nil {
-		return x.AnchorOpenId
+		return x.AnchorUuid
 	}
 	return ""
 }
@@ -138,7 +138,7 @@ func (x *SyncUserActionRes) GetCode() ErrCode {
 // SyncUserRewardReq 同步玩家奖励请求
 type SyncUserRewardReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Uid           uint64                 `protobuf:"varint,1,opt,name=uid,proto3" json:"uid,omitempty"`                                 // 玩家UID
+	Uuid          string                 `protobuf:"bytes,1,opt,name=uuid,proto3" json:"uuid,omitempty"`                                // 玩家UUID
 	RewardType    uint32                 `protobuf:"varint,2,opt,name=reward_type,json=rewardType,proto3" json:"reward_type,omitempty"` // 奖励类型
 	RewardData    []byte                 `protobuf:"bytes,3,opt,name=reward_data,json=rewardData,proto3" json:"reward_data,omitempty"`  // 业务序列化数据
 	unknownFields protoimpl.UnknownFields
@@ -175,11 +175,11 @@ func (*SyncUserRewardReq) Descriptor() ([]byte, []int) {
 	return file_internal_node_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *SyncUserRewardReq) GetUid() uint64 {
+func (x *SyncUserRewardReq) GetUuid() string {
 	if x != nil {
-		return x.Uid
+		return x.Uuid
 	}
-	return 0
+	return ""
 }
 
 func (x *SyncUserRewardReq) GetRewardType() uint32 {
@@ -245,18 +245,19 @@ var File_internal_node_proto protoreflect.FileDescriptor
 
 const file_internal_node_proto_rawDesc = "" +
 	"\n" +
-	"\x13internal_node.proto\x12\tframework\x1a\x0eerr_code.proto\"\x8d\x01\n" +
-	"\x11SyncUserActionReq\x12\x10\n" +
-	"\x03uid\x18\x01 \x01(\x04R\x03uid\x12$\n" +
-	"\x0eanchor_open_id\x18\x02 \x01(\tR\fanchorOpenId\x12\x1f\n" +
+	"\x13internal_node.proto\x12\tframework\x1a\x0eerr_code.proto\"\x8a\x01\n" +
+	"\x11SyncUserActionReq\x12\x12\n" +
+	"\x04uuid\x18\x01 \x01(\tR\x04uuid\x12\x1f\n" +
+	"\vanchor_uuid\x18\x02 \x01(\tR\n" +
+	"anchorUuid\x12\x1f\n" +
 	"\vaction_type\x18\x03 \x01(\rR\n" +
 	"actionType\x12\x1f\n" +
 	"\vaction_data\x18\x04 \x01(\fR\n" +
 	"actionData\";\n" +
 	"\x11SyncUserActionRes\x12&\n" +
-	"\x04code\x18\x01 \x01(\x0e2\x12.framework.ErrCodeR\x04code\"g\n" +
-	"\x11SyncUserRewardReq\x12\x10\n" +
-	"\x03uid\x18\x01 \x01(\x04R\x03uid\x12\x1f\n" +
+	"\x04code\x18\x01 \x01(\x0e2\x12.framework.ErrCodeR\x04code\"i\n" +
+	"\x11SyncUserRewardReq\x12\x12\n" +
+	"\x04uuid\x18\x01 \x01(\tR\x04uuid\x12\x1f\n" +
 	"\vreward_type\x18\x02 \x01(\rR\n" +
 	"rewardType\x12\x1f\n" +
 	"\vreward_data\x18\x03 \x01(\fR\n" +
