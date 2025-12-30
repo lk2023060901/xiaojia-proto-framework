@@ -58,3 +58,24 @@ message UserInfo {
   // 扩展字段（JSON 格式，业务自定义）
   string extra = 10;
 }
+
+// GetUserProfileReq 获取用户信息请求
+message GetUserProfileReq {
+  string user_uuid = 1;
+}
+
+// GetUserProfileRsp 获取用户信息响应
+message GetUserProfileRsp {
+  ErrCode code = 1;
+  string message = 2;
+  UserInfo user_info = 3;
+}
+
+// AuthService 认证服务 (内部 RPC)
+service AuthService {
+  // VerifyToken 验证 Token 合法性 (由 Gateway 调用)
+  rpc VerifyToken(VerifyTokenReq) returns (VerifyTokenRsp);
+
+  // GetUserProfile 获取用户资料 (由业务服调用)
+  rpc GetUserProfile(GetUserProfileReq) returns (GetUserProfileRsp);
+}
