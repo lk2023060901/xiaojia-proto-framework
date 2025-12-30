@@ -4,7 +4,7 @@ package framework;
 
 option go_package = "github.com/lk2023060901/xiaojia-proto-framework;framework";
 
-import "proto/err_code.proto";
+import "err_code.proto";
 
 // VerifyTokenReq Gateway 向 Login 验证 Token 请求
 //

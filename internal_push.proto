@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package framework;
+
+option go_package = "github.com/lk2023060901/xiaojia-proto-framework;framework";
+
+import "err_code.proto";
+
+// InternalPushService 跨服下行推送服务
+service InternalPushService {
+  // PushToUser [Game -> Gateway]
+  // 推送给指定在线用户
+  rpc PushToUser(PushToUserReq) returns (PushToUserRes);
+
+  // MulticastToRoom [Game -> Gateway]
+  // 组播给该网关下属于指定房间的所有玩家/主播
+  rpc MulticastToRoom(MulticastToRoomReq) returns (MulticastToRoomRes);
+}
+
+// PushToUserReq 单播请求
+message PushToUserReq {
+  uint64 uid = 1;            // 目标用户UID
+  uint32 op_code = 2;        // 业务协议号
+  bytes payload = 3;         // 业务序列化消息体
+}
+
+// PushToUserRes 单播响应
+message PushToUserRes {
+  ErrCode code = 1;          // 错误码
+}
+
+// MulticastToRoomReq 组播请求
+message MulticastToRoomReq {
+  string anchor_open_id = 1; // 直播间主播ID
+  uint32 op_code = 2;        // 业务协议号
+  bytes payload = 3;         // 业务序列化消息体
+}
+
+// MulticastToRoomRes 组播响应
+message MulticastToRoomRes {
+  ErrCode code = 1;          // 错误码
+}
