@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package framework;
+
+option go_package = "github.com/lk2023060901/xiaojia-proto-framework;framework";
+
+// DouyinCommentEvent 抖音评论事件
+message DouyinCommentEvent {
+  string msg_id = 1;        // 消息ID
+  string sec_openid = 2;    // 用户openid
+  string content = 3;       // 评论内容
+  string avatar_url = 4;    // 头像URL
+  string nickname = 5;      // 昵称
+  int64 timestamp = 6;      // 时间戳
+  string anchor_uuid = 7;   // 主播UUID
+}
+
+// DouyinGiftEvent 抖音礼物事件
+message DouyinGiftEvent {
+  string msg_id = 1;           // 消息ID
+  string sec_openid = 2;       // 用户openid
+  string sec_gift_id = 3;      // 礼物ID
+  uint32 gift_num = 4;         // 礼物数量
+  uint32 gift_value = 5;       // 礼物价值(抖币)
+  string avatar_url = 6;       // 头像URL
+  string nickname = 7;         // 昵称
+  int64 timestamp = 8;         // 时间戳
+  string sec_magic_gift_id = 9; // 幸运魔方礼物ID
+  bool test = 10;              // 是否测试数据
+  string anchor_uuid = 11;     // 主播UUID
+}
+
+// DouyinLikeEvent 抖音点赞事件
+message DouyinLikeEvent {
+  string msg_id = 1;        // 消息ID
+  string sec_openid = 2;    // 用户openid
+  uint32 like_num = 3;      // 点赞数量
+  string avatar_url = 4;    // 头像URL
+  string nickname = 5;      // 昵称
+  int64 timestamp = 6;      // 时间戳
+  string anchor_uuid = 7;   // 主播UUID
+}
+
+// DouyinFanClubEvent 抖音粉丝团事件
+message DouyinFanClubEvent {
+  string msg_id = 1;               // 消息ID
+  string sec_openid = 2;           // 用户openid
+  string avatar_url = 3;           // 头像URL
+  string nickname = 4;             // 昵称
+  int64 timestamp = 5;             // 时间戳
+  uint32 fansclub_reason_type = 6; // 粉丝团变更原因类型
+  uint32 fansclub_level = 7;       // 粉丝团等级
+  string anchor_uuid = 8;          // 主播UUID
+}
+
+// DouyinEventResponse 抖音事件统一响应
+message DouyinEventResponse {
+  int32 code = 1;      // 响应码 0-成功
+}

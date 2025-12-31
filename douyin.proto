@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package framework;
+
+option go_package = "github.com/lk2023060901/xiaojia-proto-framework;framework";
+
+import "douyin_type.proto";
+
+// DouyinGameService Live 调用 Game 处理抖音事件的服务
+service DouyinGameService {
+  // HandleComment 处理评论事件
+  rpc HandleComment(DouyinCommentEvent) returns (DouyinEventResponse);
+
+  // HandleGift 处理礼物事件
+  rpc HandleGift(DouyinGiftEvent) returns (DouyinEventResponse);
+
+  // HandleLike 处理点赞事件
+  rpc HandleLike(DouyinLikeEvent) returns (DouyinEventResponse);
+
+  // HandleFanClub 处理粉丝团事件
+  rpc HandleFanClub(DouyinFanClubEvent) returns (DouyinEventResponse);
+}
