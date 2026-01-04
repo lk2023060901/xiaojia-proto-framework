@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package framework;
+
+option go_package = "github.com/lk2023060901/xiaojia-proto-framework;framework";
+
+// ForwardMessage 针对单一玩家的转发包装
+// 用于 Gateway 与 Game 之间的内部明文通信
+message ForwardMessage {
+  // 玩家唯一 ID (UUID)
+  string user_uuid = 1;
+
+  // 原始业务协议号 (OpCode)
+  uint32 op_code = 2;
+
+  // 原始业务明文载荷 (Payload)
+  bytes payload = 3;
+}
+
+// ForwardBroadcastMessage 针对全网关在线玩家的广播包装
+// 网关收到后将发送给该节点下的所有客户端
+message ForwardBroadcastMessage {
+  // 原始业务协议号 (OpCode)
+  uint32 op_code = 1;
+
+  // 原始业务明文载荷 (Payload)
+  bytes payload = 2;
+}
